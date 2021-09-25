@@ -11,6 +11,8 @@ A workspace is a directory stored in `--dir` directory. A session is a file stor
 A session is a standard http message. You can write it by yourself. But I suggest you get it from the 
 `httpie --offline` output.
 
+The rest args for replay will add the `httpie`/`curl` command. 
+
 # Usage
 ```bash
 hs workspace --create test # create a workspace named test
@@ -25,6 +27,6 @@ hs s -w test -l # list session in the test workspace
 hs s -w test --show-path google # show the path of google
 hs s -w test -rm google # remote google session
 hs s -w test -r google --raw # print the http message of google
-hs s -w test -r google --httpie --https # use httpie to replay the google session
-hs s -w test -r google --curl # use curl to replay the google session
+hs s -w test -r google --curl | sh # use curl to replay the google session
+hs s -w test -r google --httpie --https -- -pHbhb | sh # use httpie to replay the google session
 ```

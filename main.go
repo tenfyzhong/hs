@@ -13,7 +13,7 @@ import (
 func main() {
 	app := &cli.App{
 		Name:                 "hs",
-		Usage:                "A tool to organize httpie/curl history",
+		Usage:                "A tool to enhance httpie/curl",
 		Version:              "v0.1.0",
 		EnableBashCompletion: true,
 		BashComplete:         complete.App,
@@ -21,7 +21,7 @@ func main() {
 			&cli.StringFlag{
 				Name:    "dir",
 				Value:   common.DefaultDir(),
-				Usage:   "The directory to store data",
+				Usage:   "the directory to store the data",
 				Aliases: []string{"d"},
 				EnvVars: []string{"HS_DIR"},
 			},
@@ -29,7 +29,7 @@ func main() {
 		Commands: []*cli.Command{
 			{
 				Name:         "session",
-				Usage:        "session usage",
+				Usage:        "Manage session and replay session",
 				Aliases:      []string{"s"},
 				Action:       command.Session,
 				Flags:        common.SessionFlags,
@@ -37,7 +37,7 @@ func main() {
 			},
 			{
 				Name:         "workspace",
-				Usage:        "workspace usage",
+				Usage:        "Manage workspace",
 				Aliases:      []string{"w"},
 				Action:       command.Workspace,
 				Flags:        common.WorkspaceFlags,

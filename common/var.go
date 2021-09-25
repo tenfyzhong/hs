@@ -4,50 +4,50 @@ import "github.com/urfave/cli/v2"
 
 var SessionFlags = []cli.Flag{
 	&cli.StringFlag{
-		Name:    FlagSessionSave,
-		Aliases: []string{"s"},
-		Usage:   "Save session",
+		Name:     FlagSessionWorkspace,
+		Aliases:  []string{"w"},
+		Required: true,
+		Usage:    "the workspace to work",
 	},
 	&cli.StringFlag{
-		Name:    FlagSessionReplay,
-		Aliases: []string{"r"},
-		Usage:   "Replay session",
+		Name:    FlagSessionSave,
+		Aliases: []string{"s"},
+		Usage:   "save session",
 	},
 	&cli.BoolFlag{
 		Name:    FlagSessionList,
 		Aliases: []string{"l"},
-		Usage:   "List session",
+		Usage:   "list session",
 	},
 	&cli.StringFlag{
 		Name:  FlagSessionRemove,
-		Usage: "Remove session",
+		Usage: "remove session",
 	},
 	&cli.StringFlag{
 		Name:  FlagSessionShowPath,
-		Usage: "Show the path of the session",
+		Usage: "show the path of the session",
 	},
 	&cli.StringFlag{
-		Name:     FlagSessionWorkspace,
-		Aliases:  []string{"w"},
-		Required: true,
-		Usage:    "The workspace to work",
+		Name:    FlagSessionReplay,
+		Aliases: []string{"r"},
+		Usage:   "replay session",
 	},
 	&cli.BoolFlag{
 		Name:  FlagSessionHttpie,
-		Usage: "Replay as httpie command",
+		Usage: "use httpie to replay",
 	},
 	&cli.BoolFlag{
 		Name:  FlagSessionCurl,
-		Usage: "Replay as curl command",
+		Usage: "use curl to replay",
 	},
 	&cli.BoolFlag{
 		Name:  FlagSessionRaw,
 		Value: true,
-		Usage: "Replay as raw http message",
+		Usage: "print the http message",
 	},
 	&cli.BoolFlag{
 		Name:  FlagSessionHTTPS,
-		Usage: "Replay as https",
+		Usage: "replay as https",
 	},
 }
 
@@ -55,21 +55,20 @@ var WorkspaceFlags = []cli.Flag{
 	&cli.StringFlag{
 		Name:    FlagWorkspaceCreate,
 		Aliases: []string{"c"},
-		Usage:   "Create new workspace",
+		Usage:   "create new a workspace",
 	},
 	&cli.StringFlag{
 		Name:    FlagWorkspaceRemove,
 		Aliases: []string{"r"},
-		Usage:   "Remove a workspace",
+		Usage:   "remove a workspace",
 	},
 	&cli.BoolFlag{
 		Name:    FlagWorkspaceList,
 		Aliases: []string{"l"},
-		Usage:   "List workspace",
+		Usage:   "list workspace",
 	},
 	&cli.StringFlag{
 		Name:  FlagWorkspaceShowPath,
-		Usage: "Show the path of the workspace",
+		Usage: "show the path of the workspace",
 	},
 }
-

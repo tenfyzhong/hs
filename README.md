@@ -30,3 +30,20 @@ hs s -w test -r google --raw # print the http message of google
 hs s -w test -r google --curl | sh # use curl to replay the google session
 hs s -w test -r google --httpie --https -- -pHbhb | sh # use httpie to replay the google session
 ```
+
+# autocomplete
+## Bash
+```bash
+sudo cp autocomplete/hs-complete.bash /etc/bash_completion.d/hs
+source /etc/bash_completion/hs # add to your .bashrc
+```
+
+## Zsh
+```bash
+source autocomplete/hs-complete.zsh # add to your .zshrc
+```
+
+## Power shell
+```bash
+& autocomplete/hs.ps1
+```

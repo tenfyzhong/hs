@@ -47,3 +47,6 @@ source autocomplete/hs-complete.zsh # add to your .zshrc
 ```bash
 & autocomplete/hs.ps1
 ```
+
+# Debug
+Set `ENABLE_HS_LOG` to 1, it will log errors to `hs.log` in the current directory. 

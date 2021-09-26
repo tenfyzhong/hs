@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"io"
 	"net/http"
+
+	"github.com/pkg/errors"
 )
 
 func getURL(req *http.Request) string {
@@ -38,7 +40,7 @@ func buildHttpieCmd(req *http.Request, isHTTPS bool, args []string) (string, err
 
 	body, err := io.ReadAll(req.Body)
 	if err != nil {
-		return "", err
+		return "", errors.Wrapf(err, "io.ReadAll")
 	}
 	if len(body) > 0 {
 		cmd += fmt.Sprintf(" --raw='%s'", string(body))
@@ -73,7 +75,7 @@ func buildCurlCmd(req *http.Request, isHTTPS bool, args []string) (string, error
 
 	body, err := io.ReadAll(req.Body)
 	if err != nil {
-		return "", err
+		return "", errors.Wrapf(err, "io.ReadAll")
 	}
 	if len(body) > 0 {
 		cmd += fmt.Sprintf(" -d '%s'", string(body))

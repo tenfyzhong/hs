@@ -11,6 +11,7 @@ import (
 	"path/filepath"
 	"strings"
 
+	"github.com/pkg/errors"
 	"github.com/tenfyzhong/hs/common"
 	"github.com/urfave/cli/v2"
 )
@@ -68,7 +69,7 @@ func Session(c *cli.Context) error {
 	} else {
 		err = cli.Exit("", common.CodeUnknownFlag)
 	}
-	return err
+	return errors.WithStack(err)
 }
 
 func getReplayType(c *cli.Context) ReplayType {
@@ -87,9 +88,10 @@ func saveSession(workspacePath, name string) error {
 	path := filepath.Join(workspacePath, name)
 	data, err := io.ReadAll(os.Stdin)
 	if err != nil {
-		return err
+		return errors.Wrapf(err, "io.ReadAll from os.Stdin")
 	}
-	return ioutil.WriteFile(path, data, 0644)
+	err = ioutil.WriteFile(path, data, 0644)
+	return errors.Wrapf(err, "ioutil.WriteFile %s", path)
 }
 
 func replaySession(workspacePath, name string, replayType ReplayType, isHTTPS bool, args []string) error {
@@ -97,13 +99,13 @@ func replaySession(workspacePath, name string, replayType ReplayType, isHTTPS bo
 	path := filepath.Join(workspacePath, name)
 	data, err := ioutil.ReadFile(path)
 	if err != nil {
-		return err
+		return errors.Wrapf(err, "ioutil.ReadFile %s", path)
 	}
 
 	r := bufio.NewReader(bytes.NewReader(data))
 	req, err := http.ReadRequest(r)
 	if err != nil {
-		return err
+		return errors.Wrapf(err, "http.ReadRequest data:%s", string(data))
 	}
 
 	msg := ""
@@ -112,17 +114,23 @@ func replaySession(workspacePath, name string, replayType ReplayType, isHTTPS bo
 		msg = string(data)
 	case replayHttpie:
 		msg, err = buildHttpieCmd(req, isHTTPS, args)
+		if err != nil {
+			return errors.Wrapf(err, "buildHttpieCmd data:%s", string(data))
+		}
 	case replayCurl:
 		msg, err = buildCurlCmd(req, isHTTPS, args)
+		if err != nil {
+			return errors.Wrapf(err, "buildCurlCmd data:%s", string(data))
+		}
 	}
 	fmt.Printf("%s", msg)
-	return err
+	return nil
 }
 
 func listSession(workspacePath string) error {
 	res, err := common.GetSessions(workspacePath)
 	if err != nil {
-		return err
+		return errors.Wrapf(err, "GetSessions workspacePath: %s", workspacePath)
 	}
 	for _, name := range res {
 		fmt.Println(name)
@@ -133,7 +141,8 @@ func listSession(workspacePath string) error {
 func removeSession(workspacePath, name string) error {
 	name += common.SessionSuffix
 	path := filepath.Join(workspacePath, name)
-	return os.Remove(path)
+	err := os.Remove(path)
+	return errors.Wrapf(err, "os.Remove %s", path)
 }
 
 func showPathSession(workspacePath, name string) error {

@@ -1,14 +1,29 @@
 package main
 
 import (
+	"fmt"
 	"log"
 	"os"
 
+	"github.com/pkg/errors"
 	"github.com/tenfyzhong/hs/command"
 	"github.com/tenfyzhong/hs/common"
 	"github.com/tenfyzhong/hs/complete"
 	"github.com/urfave/cli/v2"
 )
+
+var enableLog bool
+
+func init() {
+	enableLogStr := os.Getenv("ENABLE_HS_LOG")
+	if enableLogStr == "1" {
+		if w, err := os.OpenFile("hs.log", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644); err == nil {
+			enableLog = true
+			log.SetOutput(w)
+			log.SetFlags(log.Lshortfile | log.LstdFlags)
+		}
+	}
+}
 
 func main() {
 	app := &cli.App{
@@ -48,6 +63,10 @@ func main() {
 
 	err := app.Run(os.Args)
 	if err != nil {
-		log.Fatal(err)
+		if enableLog {
+			log.Printf("cmd:%v err:%+v", os.Args, err)
+		}
+		fmt.Fprintf(app.ErrWriter, "%v", errors.Cause(err).Error())
+		os.Exit(common.CodeUnknown)
 	}
 }

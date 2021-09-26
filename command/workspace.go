@@ -7,6 +7,7 @@ import (
 	"path/filepath"
 	"strings"
 
+	"github.com/pkg/errors"
 	"github.com/tenfyzhong/hs/common"
 	"github.com/urfave/cli/v2"
 )
@@ -39,24 +40,26 @@ func Workspace(c *cli.Context) error {
 		err = cli.Exit("", common.CodeUnknownFlag)
 	}
 
-	return err
+	return errors.Wrapf(err, "workspace")
 }
 
 func createWorkspace(dir, name string) error {
 	name = strings.ReplaceAll(name, "/", "-")
 	path := filepath.Join(dir, name)
-	return os.MkdirAll(path, fs.ModePerm)
+	err := os.MkdirAll(path, fs.ModePerm)
+	return errors.Wrapf(err, "MkdirAll %s", path)
 }
 
 func removeWorkspace(dir, name string) error {
 	path := filepath.Join(dir, name)
-	return os.RemoveAll(path)
+	err := os.RemoveAll(path)
+	return errors.Wrapf(err, "RemoveAll %s", path)
 }
 
 func listWorkspace(dir string) error {
 	workspaces, err := common.GetWorkspaces(dir)
 	if err != nil {
-		return err
+		return errors.Wrapf(err, "GetWorkspaces %s", dir)
 	}
 	for _, name := range workspaces {
 		fmt.Println(name)

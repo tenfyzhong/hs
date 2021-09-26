@@ -3,12 +3,14 @@ package common
 import (
 	"io/ioutil"
 	"strings"
+
+	"github.com/pkg/errors"
 )
 
 func GetSessions(workspacePath string) ([]string, error) {
 	fileInfos, err := ioutil.ReadDir(workspacePath)
 	if err != nil {
-		return nil, err
+		return nil, errors.Wrapf(err, "ioutil.ReadDir %s", workspacePath)
 	}
 	res := make([]string, 0, len(fileInfos))
 	for _, fileInfo := range fileInfos {

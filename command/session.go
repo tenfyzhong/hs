@@ -107,6 +107,8 @@ func replaySession(workspacePath, name string, replayType ReplayType, isHTTPS bo
 	if err != nil {
 		return errors.Wrapf(err, "http.ReadRequest data:%s", string(data))
 	}
+	req.Header.Del("Accept-Encoding")
+	req.Header.Del("User-Agent")
 
 	msg := ""
 	switch replayType {

@@ -1,6 +1,8 @@
 package command
 
 import (
+	"bufio"
+	"bytes"
 	"fmt"
 	"io"
 	"net/http"
@@ -82,4 +84,15 @@ func buildCurlCmd(req *http.Request, isHTTPS bool, args []string) (string, error
 	}
 
 	return cmd, nil
+}
+
+func buildHTTPRequest(data []byte) (*http.Request, error) {
+	r := bufio.NewReader(bytes.NewReader(data))
+	req, err := http.ReadRequest(r)
+	if err != nil {
+		return nil, errors.Wrapf(err, "http.ReadRequest data:%s", string(data))
+	}
+	req.Header.Del("Accept-Encoding")
+	req.Header.Del("User-Agent")
+	return req, nil
 }

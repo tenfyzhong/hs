@@ -7,7 +7,7 @@ import (
 
 func Workspace(c *cli.Context) {
 	completeCommand(c.Command.Flags, func(lastArg string) []string {
-		testFlagNames := []string{common.FlagWorkspaceCreate, common.FlagSessionList}
+		testFlagNames := []string{common.FlagCreate, common.FlagList}
 		if isFlags(c.Command.Flags, testFlagNames, lastArg) {
 			return nil
 		}

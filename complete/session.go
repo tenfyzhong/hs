@@ -10,22 +10,22 @@ import (
 func Session(c *cli.Context) {
 	completeCommand(c.Command.Flags, func(lastArg string) []string {
 		testFlagNames := []string{
-			common.FlagSessionHttpie,
-			common.FlagSessionSave,
-			common.FlagSessionCurl,
-			common.FlagSessionRaw,
-			common.FlagSessionList,
-			common.FlagSessionHTTPS}
+			common.FlagHttpie,
+			common.FlagCreate,
+			common.FlagCurl,
+			common.FlagRaw,
+			common.FlagList,
+			common.FlagHTTPS}
 		if isFlags(c.Command.Flags, testFlagNames, lastArg) {
 			return nil
 		}
 
-		if isFlag(c.Command.Flags, common.FlagSessionWorkspace, lastArg) {
+		if isFlag(c.Command.Flags, common.FlagWorkspace, lastArg) {
 			workspaces, _ := common.GetWorkspaces(common.GetDir(c))
 			return workspaces
 		}
 
-		workspace := c.String(common.FlagSessionWorkspace)
+		workspace := c.String(common.FlagWorkspace)
 		if workspace == "" {
 			return nil
 		}

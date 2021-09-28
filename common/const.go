@@ -1,23 +1,17 @@
 package common
 
 const (
-	FlagAppDir = "dir"
-
-	FlagSessionWorkspace = "workspace"
-	FlagSessionSave      = "save"
-	FlagSessionReplay    = "replay"
-	FlagSessionHttpie    = "httpie"
-	FlagSessionCurl      = "curl"
-	FlagSessionRaw       = "raw"
-	FlagSessionHTTPS     = "https"
-	FlagSessionList      = "ls"
-	FlagSessionRemove    = "rm"
-	FlagSessionShowPath  = "show-path"
-
-	FlagWorkspaceCreate   = "create"
-	FlagWorkspaceRemove   = "rm"
-	FlagWorkspaceList     = "ls"
-	FlagWorkspaceShowPath = "show-path"
+	FlagAppDir    = "dir"
+	FlagHTTPS     = "https"
+	FlagWorkspace = "workspace"
+	FlagReplay    = "replay"
+	FlagHttpie    = "httpie"
+	FlagCurl      = "curl"
+	FlagRaw       = "raw"
+	FlagList      = "ls"
+	FlagRemove    = "rm"
+	FlagShowPath  = "show-path"
+	FlagCreate    = "create"
 
 	SessionSuffix = ".http"
 )

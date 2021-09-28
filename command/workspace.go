@@ -16,22 +16,22 @@ func Workspace(c *cli.Context) error {
 	dir := common.GetDir(c)
 
 	var err error
-	if c.IsSet(common.FlagWorkspaceCreate) {
-		name := c.String(common.FlagWorkspaceCreate)
+	if c.IsSet(common.FlagCreate) {
+		name := c.String(common.FlagCreate)
 		if name == "" {
 			return cli.Exit("workspace name is required", common.CodeFlagRequired)
 		}
 		err = createWorkspace(dir, name)
-	} else if c.IsSet(common.FlagWorkspaceRemove) {
-		name := c.String(common.FlagWorkspaceRemove)
+	} else if c.IsSet(common.FlagRemove) {
+		name := c.String(common.FlagRemove)
 		if name == "" {
 			return cli.Exit("workspace name is required", common.CodeFlagRequired)
 		}
 		err = removeWorkspace(dir, name)
-	} else if c.IsSet(common.FlagWorkspaceList) {
+	} else if c.IsSet(common.FlagList) {
 		err = listWorkspace(dir)
-	} else if c.IsSet(common.FlagWorkspaceShowPath) {
-		name := c.String(common.FlagWorkspaceShowPath)
+	} else if c.IsSet(common.FlagShowPath) {
+		name := c.String(common.FlagShowPath)
 		if name == "" {
 			return cli.Exit("workspace name is required", common.CodeFlagRequired)
 		}

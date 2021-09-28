@@ -19,16 +19,16 @@ hs workspace --create test # create a workspace named test
 hs w -c test # create a workspace named test
 hs w -l # list workspace
 hs w --show-path test # show the path of test
-hs w -r test # remove test workspace
+hs w -R test # remove test workspace
 
-https --offline google.com -pHB | hs s -w test -s google # save a session named google, the http message is from httpie
-https --offline google.com -pHB | hs session --workspace test --save google # save a session named google, the http message is from httpie
+https --offline google.com -pHB | hs s -w test -c google # create a session named google, the http message is from httpie
+https --offline google.com -pHB | hs session --workspace test --create google # create a session named google, the http message is from httpie
 hs s -w test -l # list session in the test workspace
 hs s -w test --show-path google # show the path of google
 hs s -w test -rm google # remote google session
 hs s -w test -r google --raw # print the http message of google
-hs s -w test -r google --curl | sh # use curl to replay the google session
-hs s -w test -r google --httpie --https -- -pHbhb | sh # use httpie to replay the google session
+hs s -w test -r google -C | sh # use curl to replay the google session
+hs s -w test -r google -H -S -- -pHbhb | sh # use httpie to replay the google session
 ```
 
 # autocomplete

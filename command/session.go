@@ -1,12 +1,9 @@
 package command
 
 import (
-	"bufio"
-	"bytes"
 	"fmt"
 	"io"
 	"io/ioutil"
-	"net/http"
 	"os"
 	"path/filepath"
 	"strings"
@@ -26,7 +23,7 @@ const (
 
 func Session(c *cli.Context) error {
 	dir := common.GetDir(c)
-	workspace := c.String(common.FlagSessionWorkspace)
+	workspace := c.String(common.FlagWorkspace)
 	if workspace == "" {
 		return cli.Exit("--workspace is required", common.CodeFlagRequired)
 	}
@@ -37,31 +34,31 @@ func Session(c *cli.Context) error {
 	}
 
 	var err error
-	if c.IsSet(common.FlagSessionSave) {
-		name := c.String(common.FlagSessionSave)
+	if c.IsSet(common.FlagCreate) {
+		name := c.String(common.FlagCreate)
 		if name == "" {
-			return cli.Exit("save session name is required", common.CodeFlagRequired)
+			return cli.Exit("create session name is required", common.CodeFlagRequired)
 		}
-		err = saveSession(workspacePath, name)
-	} else if c.IsSet(common.FlagSessionReplay) {
-		name := c.String(common.FlagSessionReplay)
+		err = createSession(workspacePath, name)
+	} else if c.IsSet(common.FlagReplay) {
+		name := c.String(common.FlagReplay)
 		if name == "" {
 			return cli.Exit("replay session name is required", common.CodeFlagRequired)
 		}
 		replayType := getReplayType(c)
-		isHTTPS := c.Bool(common.FlagSessionHTTPS)
+		isHTTPS := c.Bool(common.FlagHTTPS)
 		args := c.Args().Slice()
 		err = replaySession(workspacePath, name, replayType, isHTTPS, args)
-	} else if c.IsSet(common.FlagSessionList) {
+	} else if c.IsSet(common.FlagList) {
 		err = listSession(workspacePath)
-	} else if c.IsSet(common.FlagSessionRemove) {
-		name := c.String(common.FlagSessionRemove)
+	} else if c.IsSet(common.FlagRemove) {
+		name := c.String(common.FlagRemove)
 		if name == "" {
 			return cli.Exit("remove session name is required", common.CodeFlagRequired)
 		}
 		err = removeSession(workspacePath, name)
-	} else if c.IsSet(common.FlagSessionShowPath) {
-		name := c.String(common.FlagSessionShowPath)
+	} else if c.IsSet(common.FlagShowPath) {
+		name := c.String(common.FlagShowPath)
 		if name == "" {
 			return cli.Exit("show-path session name is required", common.CodeFlagRequired)
 		}
@@ -74,15 +71,15 @@ func Session(c *cli.Context) error {
 
 func getReplayType(c *cli.Context) ReplayType {
 	replayType := replayRaw
-	if c.Bool(common.FlagSessionHttpie) {
+	if c.Bool(common.FlagHttpie) {
 		replayType = replayHttpie
-	} else if c.Bool(common.FlagSessionCurl) {
+	} else if c.Bool(common.FlagCurl) {
 		replayType = replayCurl
 	}
 	return replayType
 }
 
-func saveSession(workspacePath, name string) error {
+func createSession(workspacePath, name string) error {
 	name = strings.ReplaceAll(name, "/", "-")
 	name += common.SessionSuffix
 	path := filepath.Join(workspacePath, name)
@@ -102,13 +99,10 @@ func replaySession(workspacePath, name string, replayType ReplayType, isHTTPS bo
 		return errors.Wrapf(err, "ioutil.ReadFile %s", path)
 	}
 
-	r := bufio.NewReader(bytes.NewReader(data))
-	req, err := http.ReadRequest(r)
+	req, err := buildHTTPRequest(data)
 	if err != nil {
-		return errors.Wrapf(err, "http.ReadRequest data:%s", string(data))
+		return errors.Wrapf(err, "buildHttpRequest")
 	}
-	req.Header.Del("Accept-Encoding")
-	req.Header.Del("User-Agent")
 
 	msg := ""
 	switch replayType {

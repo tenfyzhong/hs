@@ -34,7 +34,7 @@ func main() {
 		BashComplete:         complete.App,
 		Flags: []cli.Flag{
 			&cli.StringFlag{
-				Name:    "dir",
+				Name:    common.FlagAppDir,
 				Value:   common.DefaultDir(),
 				Usage:   "the directory to store the data",
 				Aliases: []string{"d"},

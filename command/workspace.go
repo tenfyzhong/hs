@@ -52,7 +52,14 @@ func createWorkspace(dir, name string) error {
 
 func removeWorkspace(dir, name string) error {
 	path := filepath.Join(dir, name)
-	err := os.RemoveAll(path)
+	entries, err := os.ReadDir(path)
+	if err != nil {
+		return errors.Wrapf(err, "ReadDir %s", path)
+	}
+	if len(entries) > 0 {
+		return cli.Exit("Workspace "+name+" is not empty\n", common.CodeNotEmpty)
+	}
+	err = os.RemoveAll(path)
 	return errors.Wrapf(err, "RemoveAll %s", path)
 }
 

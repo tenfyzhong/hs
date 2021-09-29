@@ -21,5 +21,6 @@ const (
 	CodeFlagRequired
 	CodeNotExist
 	CodeUnknownFlag
+	CodeNotEmpty
 	CodeUnknown
 )

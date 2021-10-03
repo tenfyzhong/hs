@@ -58,6 +58,13 @@ func main() {
 				Flags:        common.WorkspaceFlags,
 				BashComplete: complete.Workspace,
 			},
+			{
+				Name:    "transfer",
+				Usage:   "Transfer http message to httpie/curl command",
+				Aliases: []string{"t"},
+				Action:  command.Transfer,
+				Flags:   common.TransferFlags,
+			},
 		},
 	}
 

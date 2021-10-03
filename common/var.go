@@ -78,3 +78,22 @@ var WorkspaceFlags = []cli.Flag{
 		Usage:   "show the path of the workspace",
 	},
 }
+
+var TransferFlags = []cli.Flag{
+	&cli.BoolFlag{
+		Name:    FlagHttpie,
+		Aliases: []string{"H"},
+		Usage:   "transfer to httpie command",
+	},
+	&cli.BoolFlag{
+		Name:    FlagCurl,
+		Aliases: []string{"C"},
+		Value:   true,
+		Usage:   "transfer to curl command",
+	},
+	&cli.BoolFlag{
+		Name:    FlagHTTPS,
+		Aliases: []string{"S"},
+		Usage:   "use https",
+	},
+}

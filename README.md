@@ -21,13 +21,13 @@ The `workspace` command operate a workspace. It has four flags.
 
 ### `session`
 The `session` command operate a session. It has ten flags.  
-The rest args for `--replay` flag will be add to the `httpie`/`curl` command. 
+
 - `--workspace` or `-w` special the workspace to work.
 - `--create` or `-c` create a session into the workspace. Suggest to get the http message by call the `httpie --offline` command. 
 - `--list` or `-l` list the sessions in the workspace. 
 - `--remove` or `-R` remove a session in the workspace. 
 - `--show-path` or `-P` show the path of the session in the workspace. 
-- `--replay` or `-r` replay a session in the workspace. 
+- `--replay` or `-r` replay a session in the workspace. The rest args will be add to the `httpie`/`curl` command. 
 - `--httpie` or `-H` use httpie to replay the session. Only works with `--replay`.
 - `--curl` or `-C` use curl to replay the session. Only works with `--replay`. 
 - `--raw` print the raw http message. Only works with `--replay`.

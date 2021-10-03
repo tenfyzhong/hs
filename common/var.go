@@ -7,52 +7,52 @@ var SessionFlags = []cli.Flag{
 		Name:     FlagWorkspace,
 		Aliases:  []string{"w"},
 		Required: true,
-		Usage:    "the workspace to work",
+		Usage:    "special the workspace to work",
 	},
 	&cli.StringFlag{
 		Name:    FlagCreate,
 		Aliases: []string{"c"},
-		Usage:   "create session",
+		Usage:   "create a session into the workspace, suggest to get the http message by call the 'httpie --offline' command",
 	},
 	&cli.BoolFlag{
 		Name:    FlagList,
 		Aliases: []string{"l"},
-		Usage:   "list session",
+		Usage:   "list the sessions in the workspace",
 	},
 	&cli.StringFlag{
 		Name:    FlagRemove,
 		Aliases: []string{"R"},
-		Usage:   "remove session",
+		Usage:   "remove a session in the workspace",
 	},
 	&cli.StringFlag{
 		Name:    FlagShowPath,
 		Aliases: []string{"P"},
-		Usage:   "show the path of the session",
+		Usage:   "show the path of the session in the workspace",
 	},
 	&cli.StringFlag{
 		Name:    FlagReplay,
 		Aliases: []string{"r"},
-		Usage:   "replay session",
+		Usage:   "replay a session in the workspace, the rest args will be add to the 'httpie'/'curl' command",
 	},
 	&cli.BoolFlag{
 		Name:    FlagHttpie,
 		Aliases: []string{"H"},
-		Usage:   "use httpie to replay",
+		Usage:   "use httpie to replay the session, only works with '--replay'",
 	},
 	&cli.BoolFlag{
 		Name:    FlagCurl,
 		Aliases: []string{"C"},
-		Usage:   "use curl to replay",
+		Usage:   "use curl to replay the session, only works with '--replay'",
 	},
 	&cli.BoolFlag{
 		Name:  FlagRaw,
 		Value: true,
-		Usage: "print the http message",
+		Usage: "print the raw http message, only works with '--replay'",
 	},
 	&cli.BoolFlag{
 		Name:    FlagHTTPS,
 		Aliases: []string{"S"},
-		Usage:   "replay as https",
+		Usage:   "replay as https, only works with '--httpie' or '--curl'",
 	},
 }
 

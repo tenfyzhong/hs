@@ -29,7 +29,7 @@ func main() {
 	app := &cli.App{
 		Name:                 "hs",
 		Usage:                "A tool to enhance httpie/curl",
-		Version:              "v0.1.0",
+		Version:              "v0.3.0",
 		EnableBashCompletion: true,
 		BashComplete:         complete.App,
 		Flags: []cli.Flag{

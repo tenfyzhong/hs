@@ -23,4 +23,5 @@ const (
 	CodeUnknownFlag
 	CodeNotEmpty
 	CodeUnknown
+	CodeCreateWorkspace
 )

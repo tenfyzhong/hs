@@ -30,7 +30,9 @@ func Session(c *cli.Context) error {
 
 	workspacePath := filepath.Join(dir, workspace)
 	if _, err := os.Stat(workspacePath); os.IsNotExist(err) {
-		return cli.Exit(workspacePath+" is not exist", common.CodeNotExist)
+		if err := createWorkspace(dir, workspace); err != nil {
+			return cli.Exit("create "+workspacePath+" failed", common.CodeCreateWorkspace)
+		}
 	}
 
 	var err error
